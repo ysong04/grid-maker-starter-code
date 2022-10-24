@@ -1,4 +1,4 @@
-# Assignment 3 - Grid Maker.
+# Assignment 3 - Grid Maker
 
 ### Group Members
 | Name       | Github              |
