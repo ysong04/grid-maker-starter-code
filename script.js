@@ -24,9 +24,8 @@ function addR() {
 
 // Add a column
 function addC() {
-
     // if there's no row, which means no cell, 
-    // call the addR() function to create a row, which also creates a column for the first time() *refer to if(row == 1) col++; 
+    // call the addR() function to create a row, which also creates a column for the first time() [note: refer to if(row == 1) col++;]
     if(rows == 0) {
         addR();
     }
@@ -38,17 +37,49 @@ function addC() {
         let new_col = document.createElement("td");// create new column and call it new_col
         all_rows[i].appendChild(new_col); // insert a new_col to each row 
     }
-    cols++;
+    cols++; // increment the number of columns 
 }
 
 // Remove a row
 function removeR() {
-    alert("Clicked Remove Row"); // Replace this line with your code.
-}
+    // if there's no row to delete, alert the user to add a row
+    if(rows == 0) { 
+        alert("Please add a row");
+    }
+
+    // if there's a row to delete, delete a row and decrement the number of rows
+    else { 
+        let table_ref = document.getElementById("grid")
+        table_ref.deleteRow(-1) 
+        rows--; 
+
+        // if row 0 is deleted, there are is column as well  
+        if(rows == 0) { 
+            cols == 0; 
+        }
+    }
 
 // Remove a column
 function removeC() {
-    alert("Clicked Remove Col"); // Replace this line with your code.
+    // if there's no column to delete, alert the user to add a column 
+    if(cols == 0) {
+        alert("Please add a column")
+    }
+
+    else {
+        let all_rows = document.querySelectorAll("tr"); // reference to the rows of the table
+
+        // delete the last cell of each row 
+        for(let i = 0; i < rows; i++) {
+            all_rows[i].deleteCell(-1)
+        }
+        cols --; // decrement the number of columns
+
+        // if the last column is deleted, there're no rows as well 
+        if(cols == 0) { 
+            rows == 0; 
+        }
+    }
 }
 
 // Set global variable for selected color
