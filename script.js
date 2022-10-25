@@ -158,10 +158,16 @@ function fillU(){
 
 // Fill all cells
 function fillAll(){
-    let row = document.getElementsByTagName("td"); //get array of all cells
-    for (let i = 0; i < row.length; i++) {
-        row[i].style.backgroundColor = colorSelected; // fills the cell with the color selected
-    }
+    let cells = document.querySelectorAll("td");
+
+    //No need for condition, because we are filling ALL cells.
+
+    //This accesses every individual cell
+    cells.forEach(
+        function(node){
+            node.style.backgroundColor = colorSelected;
+        }
+    )
 }
 
 function clearAll(){
