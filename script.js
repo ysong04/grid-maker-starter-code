@@ -3,82 +3,127 @@ let numRows = 0;
 let numCols = 0;
 let colorSelected;
 
+
+
 // Add a row
 function addR() {
-    let table_ref = document.getElementById("grid") // reference to the table
+    if (numRows === 0 && numCols === 0) {
 
-    let new_row = table_ref.insertRow(-1) // add a new row at the end of the table
+        const table = document.querySelector("#grid");
 
-    new_row.insertCell(0); // insert a cell in the row at the index 0
-    rows++; // increment the number of rows
+        let addRow = document.createElement("tr");
+        let addCell = document.createElement("td");
 
-    if (rows == 1) cols ++; // each row that is being added for the first time is equivalent of a column
+        table.appendChild(addRow);
 
-    // if col > 1, add a row to each column that eixsts
-    if (cols > 1) {
-        for(let i = 0; i < cols - 1; i++) {
-            new_row.insertCell(0)
+        const row = document.querySelector("tr");
+
+        addCell.addEventListener("click", Color);//Additional function Color added to increase readablillity
+        row.appendChild(addCell);
+
+        numRows++;
+        numCols++;
+
+    } else {
+
+        const table = document.querySelector("#grid");
+
+        let addRow = document.createElement("tr");
+
+        table.appendChild(addRow);
+
+        const row = document.querySelectorAll("tr");
+
+        for (let i = 0; i < numCols; i++) {
+
+            let cell = document.createElement("td");
+            cell.addEventListener("click", Color);//Additional function Color added to increase readablillity
+            row[numRows].appendChild(cell);
+
         }
+
+        numRows++;
+
     }
 }
 
 // Add a column
 function addC() {
-    // if there's no row, which means no cell,
-    // call the addR() function to create a row, which also creates a column for the first time() [note: refer to if(row == 1) col++;]
-    if(rows == 0) {
-        addR();
-    }
-    else {
-        let all_rows = document.querySelectorAll("tr"); // get all the rows
-    }
+    if (numRows === 0 && numCols === 0) {
 
-    for (let i = 0; i < rows < i++) {
-        let new_col = document.createElement("td");// create new column and call it new_col
-        all_rows[i].appendChild(new_col); // insert a new_col to each row
+        const table = document.querySelector("#grid");
+
+        let addRow = document.createElement("tr");
+        let addCell = document.createElement("td");
+
+        table.appendChild(addRow);
+
+        const row = document.querySelector("tr");
+
+        addCell.addEventListener("click", Color);//Additional function Color added to increase readablillity
+        row.appendChild(addCell);
+
+        numCols++;
+        numRows++;
+
+    } else {
+
+        const row = document.querySelectorAll("tr");
+
+        for (let i = 0; i < numRows; i++) {
+
+            let cell = document.createElement("td");
+            cell.addEventListener("click", Color);//Additional function Color added to increase readablillity
+            row[i].appendChild(cell);
+
+        }
+
+        numCols++;
+
     }
-    cols++; // increment the number of columns
 }
 
 // Remove a row
 function removeR() {
-    // if there's no row to delete, alert the user to add a row
-    if(rows == 0) {
-        alert("Please add a row");
-    }
 
-    // if there's a row to delete, delete a row and decrement the number of rows
-    else {
-        let table_ref = document.getElementById("grid")
-        table_ref.deleteRow(-1)
-        rows--;
+    if (numRows === 0) return;
 
-        // if row 0 is deleted, there are is column as well
-        if(rows == 0) {
-            cols == 0;
+    const table = document.querySelector("#grid");
+
+    table.removeChild(table.lastChild);
+
+    numRows--;
+
+    if (numRows === 0) {
+
+        while (table.hasChildNodes()) {
+            table.removeChild(table.lastChild);
         }
+        numCols = 0;
     }
+}
 
 // Remove a column
 function removeC() {
-    // if there's no column to delete, alert the user to add a column
-    if(cols == 0) {
-        alert("Please add a column")
+
+    if (numCols === 0) return;
+
+    const table = document.querySelector("#grid");
+    const rows = document.querySelectorAll("tr");
+
+    for (let i = 0; i < numRows; i++) {
+        rows[i].removeChild(rows[i].lastChild);
     }
 
-    else {
-        let all_rows = document.querySelectorAll("tr"); // reference to the rows of the table
+    numCols--;
 
-        // delete the last cell of each row
-        for(let i = 0; i < rows; i++) {
-            all_rows[i].deleteCell(-1)
-        }
-        cols --; // decrement the number of columns
+    if (numCols === 0) {
 
-        // if the last column is deleted, there're no rows as well
-        if(cols == 0) {
-            rows == 0;
+        while (table.hasChildNodes()) {
+            table.removeChild(table.lastChild);
         }
+
+        numRows = 0;
     }
 }
 
@@ -86,6 +131,14 @@ function removeC() {
 function selectColor(){
     colorSelected = document.getElementById("selectedColorId").value;
     console.log(colorSelected);
+}
+
+
+// Extra Function
+// Added to make program more efficient and readable
+function Color() {
+    //Using this for the addEventListener
+    this.style.backgroundColor = colorSelected;
 }
 
 // Fill all uncolored cells
@@ -106,10 +159,9 @@ function fillAll(){
     }
 }
 
-// Clear all cells
 function clearAll(){
     let row = document.getElementsByTagName("td"); //get array of all cells
     for (let i = 0; i < row.length; i++) {
         row[i].style.removeProperty("background-color"); // remove the backgroundColor
     }
-}  
+}
