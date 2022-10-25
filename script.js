@@ -143,13 +143,18 @@ function Color() {
 
 // Fill all uncolored cells
 function fillU(){
-    let row = document.getElementsByTagName("td"); //get array of all cells
-    for (let i = 0; i < row.length; i++){
-        if(!row[i].style.backgroundColor){ //if the cell has no color then we set the color to the colorselected
-            row[i].style.backgroundColor = colorSelected;
-        }
-    }
-}f
+    //We want to access every cell
+    let cells = document.querySelectorAll("td");
+        //We want to access every uncolored cell
+        // console.log("cells:",cells);
+        cells.forEach(
+            function(node){
+                if (node.style.backgroundColor == ""){
+                    node.style.backgroundColor = colorSelected;
+                }
+            }
+        )
+}
 
 // Fill all cells
 function fillAll(){
