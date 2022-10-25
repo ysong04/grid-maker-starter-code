@@ -96,11 +96,14 @@ function fillU(){
             row[i].style.backgroundColor = colorSelected;
         }
     }
-}
+}f
 
 // Fill all cells
 function fillAll(){
-    alert("Clicked Fill All"); // Replace this line with your code.
+    let row = document.getElementsByTagName("td"); //get array of all cells
+    for (let i = 0; i < row.length; i++) {
+        row[i].style.backgroundColor = colorSelected; // fills the cell with the color selected
+    }
 }
 
 // Clear all cells
